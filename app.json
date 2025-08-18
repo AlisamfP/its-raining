@@ -37,6 +37,13 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "36387df4-f702-4526-b11d-e845ac68e040"
+      }
+    },
+    "owner": "alisamfp"
   }
 }
