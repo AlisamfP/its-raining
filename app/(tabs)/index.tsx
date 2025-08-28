@@ -1,6 +1,5 @@
-import SunIcon from "@/components/SunIcon";
-import React, { useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React from "react";
+import { Image, StyleSheet, Text, View } from "react-native";
 
 // Dummy weather hook (replace with real API logic)
 function useWeather() {
@@ -18,21 +17,18 @@ function useWeather() {
 
 export default function Home() {
   const weather = useWeather();
-  const [sunHeight, setSunHeight] = useState<number>(100)
 
 
   return (
     <View style={styles.container}>
       {/* Sun in top left if sunny */}
       {weather.isSunny && (
-        <View 
-          style={styles.sunContainer}
-          onLayout={(e) => {
-            const { height } = e.nativeEvent.layout;
-            setSunHeight(height);
-          }}
-        >
-          <SunIcon  />
+        <View style={styles.sunContainer}>
+          <Image 
+            source={require('../../assets/images/sun.png')} 
+            resizeMode="contain"
+            style={styles.sunImage} 
+          />
         </View>
       )}
 
@@ -46,10 +42,9 @@ export default function Home() {
       {/* {weather.isRaining && <RainAnimation />} */}
 
       {/* Centered weather info */}
-      <View style={[styles.centerContent, { marginTop: (sunHeight - 75) }]}>
+      <View style={styles.centerContent}>
         <Text
           adjustsFontSizeToFit
-          ellipsizeMode="clip"
           style={styles.title}>
           {weather.isRaining ? "It's raining" : "It's not raining"}
         </Text>
@@ -60,24 +55,25 @@ export default function Home() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#e0f7fa" },
+  container: { flex: 1, backgroundColor: "#e0f7fa", position: 'relative' },
   sunContainer: {
     position: "absolute",
-    top: 0,
+    top: -2,
     left: 0,
     zIndex: 2,
-    width: '75%',
-    maxWidth: 500,
+  },
+  sunImage: {
+    width: 250,
+    height: 250
   },
   tempContainer: {
     position: "absolute",
     top: 8,
     right: 8,
     zIndex: 2,
-    backgroundColor: "rgba(255,255,255,0.5)",
-    borderRadius: 50,
-    width: 100,
-    height: 100,
+    backgroundColor: "rgba(255,255,255,0.3)",
+    width: 125,
+    height: 75,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center'
@@ -104,6 +100,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: "#333",
     textAlign: "center",
-    // maxWidth: 300,
+    maxWidth: 300,
   },
 });
